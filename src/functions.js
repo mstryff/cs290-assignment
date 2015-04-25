@@ -36,6 +36,7 @@ var barType = typeof bar;
 bar = function(doubleArray)
 {
     var success = true;
+    var i;
     
     for(i = 0; i < doubleArray.length; i++)
     {
@@ -81,24 +82,22 @@ function GitLog(hash, date, message) {
 */
 
 //your code here
-function parseGit(gitStrings)
+function parseGit(logArray)
 {
-    var newLogs = [];
-    var logArray, newHash, newDate, newMessage;
+    var gitLogArray = [];
+    var i;
     
-    for(i = 0; i < gitStrings.length; i++)
+    for(i = 0; i < logArray.length; i++)
     {
-        logArray = gitStrings[i].split(" ");
-        newHash = logArray[0];
-        for(j = 1; j < 7; j++)
-        {
-            newDate += logArray[j];
-        }
-        logArray = gitStrings[i].split('"');
-        newMessage = logArray[1];
+        var currentLog = logArray[i].split(" ");
+        var currentHash = currentLog[0];
+        var currentDate = currentLog[1] + " " + currentLog[2] + " " + currentLog[3] + " " + currentLog[4] + " " + currentLog[5] + " " + currentLog[6];
+        var currentMessage = logArray[i].split('"')[1];
         
-        newLogs.push(GitLog(newHash, newDate, newMessage));
+        var currentGitLog = new GitLog(currentHash, new Date(currentDate), currentMessage);
+        
+        gitLogArray.push(currentGitLog);
     }
-    
+    return gitLogArray;
 }
 //end your code
